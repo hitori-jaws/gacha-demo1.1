@@ -1,67 +1,62 @@
-/* ------ gacha machine layout & animation ------ */
+/* -------- layout -------- */
 #gacha{
   position:relative;
   width:80vw;
   max-width:300px;
   margin:24px auto;
+  overflow:hidden; /* hide capsules sliding down */
 }
-#gacha img{
-  position:absolute;
-  pointer-events:none;
-}
+#gacha img{position:absolute;pointer-events:none;}
 
-/* -------- individual layers -------- */
-
-/* frame occupies full box */
-.frame{
-  width:100%;
-  top:0;
-  left:0;
-}
+/* frame full */
+.frame{width:100%;top:0;left:0;}
 
 /* capsules sprite */
 .caps{
   width:80%;
   top:10%;
   left:10%;
+  transform:translateY(0);
 }
 
-/* handle */
+/* handle positioned overコイン部 */
 .handle{
   width:38%;
-  top:46%;
+  top:48%;
   left:31%;
   transform-origin:50% 50%;
 }
 
-/* single capsule drop */
+/* single capsule output */
 .ball{
   width:32%;
   bottom:22%;
   left:34%;
   transform:translateX(-50%) scale(0);
-  animation:ballDrop 1.2s ease-in forwards;
-  animation-play-state:paused;
 }
 
-/* -------- keyframes -------- */
-@keyframes handleSpin{
-  0%{transform:rotate(0deg);}
-  40%{transform:rotate(360deg);}
-  100%{transform:rotate(0deg);}
-}
-@keyframes capsMove{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(20%);}
-  100%{transform:translateY(0);}
-}
-@keyframes ballDrop{
-  0%{transform:translateX(-50%) scale(0);}
-  60%{transform:translateX(-50%) translateY(-60%) scale(1);}
-  100%{transform:translateX(-50%) translateY(0) scale(1);}
+/* ---- animations ---- */
+.spin .handle{animation:handleSeq 2.8s ease-in-out forwards;}
+.spin .caps{animation:capsSeq 2.8s ease-in-out forwards;}
+.spin .ball{animation:ballSeq 2.8s ease-in-out forwards;}
+
+@keyframes handleSeq{
+  0%  {transform:rotate(0deg);}
+  10% {transform:rotate(180deg);}
+  20% {transform:rotate(180deg);}  /* pause */
+  30% {transform:rotate(360deg);}
+  40% {transform:rotate(360deg);}  /* pause */
+  50% {transform:rotate(540deg);}  /* final 180 */
+  100%{transform:rotate(540deg);}  /* hold */
 }
 
-/* -------- toggle by JS -------- */
-.spin .handle {animation:handleSpin 1s ease-out both;}
-.spin .caps   {animation:capsMove 1s ease-in-out both;}
-.spin .ball   {animation-play-state:running;}
+@keyframes capsSeq{
+  0%,50% {transform:translateY(0);}
+  60%,100%{transform:translateY(20%);} /* lower and hold */
+}
+
+@keyframes ballSeq{
+  0%,60% {transform:translateX(-50%) scale(0);}
+  70%    {transform:translateX(-50%) translateY(-60%) scale(1);}
+  100%   {transform:translateX(-50%) translateY(0) scale(1);}
+}
