@@ -1,41 +1,67 @@
-#gacha {
-  position: relative;
-  width: 80vw;
-  max-width: 300px;
-  margin: 24px auto;
+/* ------ gacha machine layout & animation ------ */
+#gacha{
+  position:relative;
+  width:80vw;
+  max-width:300px;
+  margin:24px auto;
 }
-#gacha img {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  pointer-events: none;
+#gacha img{
+  position:absolute;
+  pointer-events:none;
 }
-.handle {
-  transform-origin: 50% 50%;
+
+/* -------- individual layers -------- */
+
+/* frame occupies full box */
+.frame{
+  width:100%;
+  top:0;
+  left:0;
 }
-.ball {
-  bottom: 22%;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  animation: ballDrop 1.2s ease-in forwards;
-  animation-play-state: paused;
+
+/* capsules sprite */
+.caps{
+  width:80%;
+  top:10%;
+  left:10%;
 }
-@keyframes handleSpin {
-  0% { transform: rotate(0deg); }
-  40% { transform: rotate(360deg); }
-  100% { transform: rotate(0deg); }
+
+/* handle */
+.handle{
+  width:38%;
+  top:46%;
+  left:31%;
+  transform-origin:50% 50%;
 }
-@keyframes capsMove {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(20%); }
-  100% { transform: translateY(0); }
+
+/* single capsule drop */
+.ball{
+  width:32%;
+  bottom:22%;
+  left:34%;
+  transform:translateX(-50%) scale(0);
+  animation:ballDrop 1.2s ease-in forwards;
+  animation-play-state:paused;
 }
-@keyframes ballDrop {
-  0% { transform: translateX(-50%) scale(0); }
-  60% { transform: translateX(-50%) translateY(-60%) scale(1); }
-  100% { transform: translateX(-50%) translateY(0) scale(1); }
+
+/* -------- keyframes -------- */
+@keyframes handleSpin{
+  0%{transform:rotate(0deg);}
+  40%{transform:rotate(360deg);}
+  100%{transform:rotate(0deg);}
 }
-.spin .handle { animation: handleSpin 1s ease-out both; }
-.spin .caps   { animation: capsMove 1s ease-in-out both; }
-.spin .ball   { animation-play-state: running; }
+@keyframes capsMove{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(20%);}
+  100%{transform:translateY(0);}
+}
+@keyframes ballDrop{
+  0%{transform:translateX(-50%) scale(0);}
+  60%{transform:translateX(-50%) translateY(-60%) scale(1);}
+  100%{transform:translateX(-50%) translateY(0) scale(1);}
+}
+
+/* -------- toggle by JS -------- */
+.spin .handle {animation:handleSpin 1s ease-out both;}
+.spin .caps   {animation:capsMove 1s ease-in-out both;}
+.spin .ball   {animation-play-state:running;}
